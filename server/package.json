@@ -1,0 +1,33 @@
+{
+  "name": "chat-server",
+  "version": "1.0.0",
+  "description": "Simple chat server.",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node ./dist/app.js",
+    "dev": "nodemon ./src/app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaspervhaastert/chat.git"
+  },
+  "author": "Jasper van Haastert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jaspervhaastert/chat/issues"
+  },
+  "homepage": "https://github.com/jaspervhaastert/chat#readme",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.0",
+    "@types/socket.io": "^2.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  }
+}
