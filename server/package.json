@@ -1,0 +1,21 @@
+{
+  "name": "chat-server",
+  "version": "1.0.0",
+  "description": "Simple chat server.",
+  "scripts": {
+    "start": "node ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaspervhaastert/chat.git"
+  },
+  "author": "Jasper van Haastert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jaspervhaastert/chat/issues"
+  },
+  "homepage": "https://github.com/jaspervhaastert/chat#readme",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
