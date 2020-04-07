@@ -1,12 +1,12 @@
-const http = require('http');
-const socketIo = require('socket.io');
+import http from 'http';
+import SocketIo, {Socket} from 'socket.io';
 
 const server = http.createServer();
-const io = socketIo(server);
+const io = SocketIo(server);
 
 const port = process.env.PORT || 3000;
 
-io.on('connection', socket => {
+io.on('connection', (socket: Socket) => {
     console.log('A user connected');
 
     socket.on('disconnect', () => {
