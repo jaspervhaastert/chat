@@ -1,39 +1,59 @@
 import React from 'react';
+import {Button, Grid, Paper, styled, TextField, Typography} from '@material-ui/core';
 
-import './App.css';
-import {AppBar, Button, Grid, Paper, TextField, Toolbar, Typography} from '@material-ui/core';
+import AppBar from './components/AppBar';
+
+const MainGrid = styled(Grid)({
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: '2em'
+});
+
+const FlexGrid = styled(Grid)({
+    display: 'flex'
+});
+
+const WelcomePaper = styled(Paper)({
+    padding: '1em'
+});
+
+const NicknameColumn = styled(FlexGrid)({
+    paddingRight: '1em'
+});
+
+const NicknameTextField = styled(TextField)({
+    display: 'flex',
+    flexGrow: 1
+});
 
 const App: React.FC = () => {
     return (
         <>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography component="h1">
-                        Chat client
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Grid component="main" justify="center">
-                <Grid direction="column" xs={6} justify="center" className="flex">
+            <AppBar/>
+            <MainGrid container>
+                <FlexGrid direction="column" xs={4} justify="center">
                     <Grid item>
-                        <Paper elevation={1} className="paper">
-                            <Typography variant="h6" component="h2" gutterBottom>
+                        <WelcomePaper elevation={1}>
+                            <Typography variant="h6" component="h6" color="primary" gutterBottom>
                                 Welcome
+                            </Typography>
+                            <Typography color="textSecondary" gutterBottom>
+                                Please enter a nickname to join the chat.
                             </Typography>
                             <form>
                                 <Grid container>
-                                    <Grid item xs={10}>
-                                        <TextField id="nickname" label="Nickname"/>
-                                    </Grid>
-                                    <Grid item xs={2} className="flex" alignItems="flex-end">
+                                    <NicknameColumn item xs={10}>
+                                        <NicknameTextField id="nickname" label="Nickname"/>
+                                    </NicknameColumn>
+                                    <FlexGrid item xs={2} alignItems="flex-end" justify="flex-end">
                                         <Button variant="contained" color="primary" type="submit">Submit</Button>
-                                    </Grid>
+                                    </FlexGrid>
                                 </Grid>
                             </form>
-                        </Paper>
+                        </WelcomePaper>
                     </Grid>
-                </Grid>
-            </Grid>
+                </FlexGrid>
+            </MainGrid>
         </>
     );
 };
