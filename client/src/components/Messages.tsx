@@ -30,9 +30,8 @@ const Messages: React.FC<MessagesProps> = ({messages}) => {
     const paperRow = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (paperRow.current) {
-            paperRow.current.scrollTop = paperRow.current.scrollHeight;
-        }
+        if (!paperRow.current) return;
+        paperRow.current.scrollTop = paperRow.current.scrollHeight;
     }, [paperRow, messages]);
 
     return (

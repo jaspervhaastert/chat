@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid, styled} from '@material-ui/core';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch, useLocation} from 'react-router-dom';
 
 import AppBar from './components/AppBar';
 import Welcome from './pages/Welcome';
@@ -13,9 +13,17 @@ const ContentRow = styled(Grid)({
     padding: '2em'
 });
 
+const useQuery = (): URLSearchParams => {
+    return new URLSearchParams(useLocation().search);
+};
+
 const App: React.FC = () => {
+    const query = useQuery();
+
+    const nickname = query.get('nickname');
+
     return (
-        <BrowserRouter>
+        <>
             <Grid container>
                 <AppBar/>
             </Grid>
@@ -25,11 +33,15 @@ const App: React.FC = () => {
                         <Welcome/>
                     </Route>
                     <Route path="/chat" exact>
-                        <Chat/>
+                        {nickname ? (
+                            <Chat nickname={nickname}/>
+                        ) : (
+                            <Redirect to="/"/>
+                        )}
                     </Route>
                 </Switch>
             </ContentRow>
-        </BrowserRouter>
+        </>
     );
 };
 

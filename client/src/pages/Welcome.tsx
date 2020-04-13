@@ -7,6 +7,10 @@ const WelcomePaper = styled(Paper)({
 });
 
 const Welcome: React.FC = () => {
+    const redirectToChat = (nickname: string): void => {
+        window.location.href = `/chat?nickname=${nickname}`;
+    };
+
     return (
         <Grid container direction="column" justify="center">
             <Grid container justify="center">
@@ -18,7 +22,7 @@ const Welcome: React.FC = () => {
                         <Typography color="textSecondary" gutterBottom>
                             Please enter a nickname to join the chat.
                         </Typography>
-                        <InputBar textFieldLabel="Nickname" buttonLabel="Submit"/>
+                        <InputBar textFieldLabel="Nickname" buttonLabel="Submit" onSubmit={redirectToChat}/>
                     </WelcomePaper>
                 </Grid>
             </Grid>

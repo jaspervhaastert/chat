@@ -34,8 +34,16 @@ const MessageBarPaper = styled(Paper)({
     padding: '1em'
 });
 
-const Chat: React.FC = () => {
+interface ChatProps {
+    nickname: string;
+}
+
+const Chat: React.FC<ChatProps> = () => {
     const [messages] = useState<Message[]>([]);
+
+    const sendMessage = (message: string): void => {
+        console.log(message);
+    };
 
     return (
         <ChatColumn container direction="column">
@@ -47,7 +55,7 @@ const Chat: React.FC = () => {
             <MessageBarRow container>
                 <MessageBarColumn container direction="column">
                     <MessageBarPaper elevation={1}>
-                        <InputBar textFieldLabel="Message" buttonLabel="Send"/>
+                        <InputBar textFieldLabel="Message" buttonLabel="Send" onSubmit={sendMessage}/>
                     </MessageBarPaper>
                 </MessageBarColumn>
             </MessageBarRow>
