@@ -18,10 +18,11 @@
   },
   "homepage": "https://github.com/jaspervhaastert/chat#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "@types/node": "^13.11.0",
+    "@types/express": "^4.17.6",
     "@types/socket.io": "^2.1.4",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
