@@ -4,24 +4,31 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import AppBar from './components/AppBar';
 import Welcome from './pages/Welcome';
+import Chat from './pages/Chat';
 
-const MainGrid = styled(Grid)({
-    flexGrow: 1,
+const ContentRow = styled(Grid)({
+    flex: 1,
     justifyContent: 'center',
+    overflow: 'auto',
     padding: '2em'
 });
 
 const App: React.FC = () => {
     return (
         <BrowserRouter>
-            <AppBar/>
-            <MainGrid container>
+            <Grid container>
+                <AppBar/>
+            </Grid>
+            <ContentRow container>
                 <Switch>
                     <Route path="/" exact>
                         <Welcome/>
                     </Route>
+                    <Route path="/chat" exact>
+                        <Chat/>
+                    </Route>
                 </Switch>
-            </MainGrid>
+            </ContentRow>
         </BrowserRouter>
     );
 };
