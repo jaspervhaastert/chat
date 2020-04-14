@@ -41,6 +41,10 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = () => {
     const [messages] = useState<Message[]>([]);
 
+    const canMessageBeSent = async (): Promise<boolean> => {
+        return true;
+    };
+
     const sendMessage = (message: string): void => {
         console.log(message);
     };
@@ -55,7 +59,12 @@ const Chat: React.FC<ChatProps> = () => {
             <MessageBarRow container>
                 <MessageBarColumn container direction="column">
                     <MessageBarPaper elevation={1}>
-                        <InputBar textFieldLabel="Message" buttonLabel="Send" onSubmit={sendMessage}/>
+                        <InputBar
+                            textFieldLabel="Message"
+                            buttonLabel="Send"
+                            canSubmit={canMessageBeSent}
+                            onSubmit={sendMessage}
+                        />
                     </MessageBarPaper>
                 </MessageBarColumn>
             </MessageBarRow>

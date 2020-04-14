@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Button, Grid, styled, TextField} from '@material-ui/core';
 
 const TextFieldColumn = styled(Grid)({
@@ -18,14 +18,19 @@ const ButtonColumn = styled(Grid)({
     justifyContent: 'flex-end'
 });
 
+type CanSubmit = (value: string) => Promise<boolean>;
+type OnSubmit = (value: string) => void;
+
 interface InputBarProps {
     textFieldLabel: string;
     buttonLabel: string;
-    onSubmit: (value: string) => void;
+    canSubmit: CanSubmit;
+    onSubmit: OnSubmit;
 }
 
-const InputBar: React.FC<InputBarProps> = ({textFieldLabel, buttonLabel, onSubmit}) => {
+const InputBar: React.FC<InputBarProps> = ({textFieldLabel, buttonLabel, canSubmit, onSubmit}) => {
     const [value, setValue] = useState<string>('');
+    const [isButtonEnabled, setButtonEnabled] = useState<boolean>(false);
 
     const handleValueChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setValue(event.target.value);
@@ -33,12 +38,14 @@ const InputBar: React.FC<InputBarProps> = ({textFieldLabel, buttonLabel, onSubmi
 
     const handleSubmit = (event: FormEvent): void => {
         event.preventDefault();
-
-        if (!value) return;
-
         onSubmit(value);
-        setValue('');
     };
+
+    useEffect(() => {
+        canSubmit(value)
+            .then(result => setButtonEnabled(result))
+            .catch(() => setButtonEnabled(false));
+    }, [canSubmit, value]);
 
     return (
         <Grid container direction="column">
@@ -53,7 +60,7 @@ const InputBar: React.FC<InputBarProps> = ({textFieldLabel, buttonLabel, onSubmi
                         />
                     </TextFieldColumn>
                     <ButtonColumn item>
-                        <Button variant="contained" color="primary" type="submit" disabled={!value}>
+                        <Button variant="contained" color="primary" type="submit" disabled={!isButtonEnabled}>
                             {buttonLabel}
                         </Button>
                     </ButtonColumn>
