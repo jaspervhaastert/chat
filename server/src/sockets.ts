@@ -11,8 +11,9 @@ const setupSockets = (server: Server, nicknameService: NicknameService): void =>
         const nickname = socket.handshake.query.nickname;
         if (!nickname || nicknameService.getNickname(nickname)) return socket.disconnect(true);
 
-        console.log(`${nickname} connected`);
         nicknameService.addNickname(nickname);
+        io.send({nickname, message: 'connected!'});
+        console.log(`${nickname} connected`);
 
         socket.on('message', (message: Message, acknowledge: () => void) => {
             console.log(`${message.nickname}: ${message.message}`);
