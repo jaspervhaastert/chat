@@ -1,4 +1,7 @@
-import express, {Request, Response} from 'express';
+import {config} from 'dotenv';
+config();
+
+import express, {Request, Response, NextFunction} from 'express';
 import http from 'http';
 import SocketIo, {Socket} from 'socket.io';
 
@@ -13,6 +16,11 @@ let nicknames: string[] = [];
 const getNickname = (nickname: string): string | undefined => {
     return nicknames.find(n => n === nickname);
 };
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+    next();
+});
 
 app.get('/nicknames/:nickname', (req: Request, res: Response) => {
     const nickname = getNickname(req.params.nickname);
