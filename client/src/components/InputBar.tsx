@@ -39,6 +39,7 @@ const InputBar: React.FC<InputBarProps> = ({textFieldLabel, buttonLabel, canSubm
     const handleSubmit = (event: FormEvent): void => {
         event.preventDefault();
         onSubmit(value);
+        setValue('');
     };
 
     useEffect(() => {

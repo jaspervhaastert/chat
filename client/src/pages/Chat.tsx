@@ -44,8 +44,8 @@ const Chat: React.FC<ChatProps> = ({serverUrl, nickname}) => {
     const [socket, setSocket] = useState<SocketIOClient.Socket>();
     const [messages, setMessages] = useState<Message[]>([]);
 
-    const canMessageBeSent = async (): Promise<boolean> => {
-        return true;
+    const canMessageBeSent = async (value: string): Promise<boolean> => {
+        return !!value;
     };
 
     const sendMessage = (message: string): void => {
