@@ -1,9 +1,7 @@
 import React from 'react';
-import {AppBar as MuiAppBar, Link, styled, Toolbar, Typography} from '@material-ui/core';
+import {AppBar as MuiAppBar, Toolbar, Typography} from '@material-ui/core';
 
-const WhiteLink = styled(Link)({
-    color: 'white'
-});
+import {WhiteLink} from './AppBar.styled';
 
 const AppBar: React.FC = () => {
     return (
