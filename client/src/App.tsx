@@ -19,8 +19,13 @@ const useQuery = (): URLSearchParams => {
 
 const App: React.FC = () => {
     const query = useQuery();
-
     const nickname = query.get('nickname');
+
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+    if (!serverUrl) {
+        console.error('\'REACT_APP_SERVER_URL\' environment variable is missing.');
+        return null;
+    }
 
     return (
         <>
@@ -30,11 +35,11 @@ const App: React.FC = () => {
             <ContentRow container>
                 <Switch>
                     <Route path="/" exact>
-                        <Welcome/>
+                        <Welcome serverUrl={serverUrl}/>
                     </Route>
                     <Route path="/chat" exact>
                         {nickname ? (
-                            <Chat nickname={nickname}/>
+                            <Chat serverUrl={serverUrl} nickname={nickname}/>
                         ) : (
                             <Redirect to="/"/>
                         )}

@@ -6,13 +6,11 @@ const WelcomePaper = styled(Paper)({
     padding: '1em'
 });
 
-const Welcome: React.FC = () => {
-    const serverUrl = process.env.REACT_APP_SERVER_URL;
-    if (!serverUrl) {
-        console.error('\'REACT_APP_SERVER_URL\' environment variable is missing.');
-        return null;
-    }
+interface WelcomeProps {
+    serverUrl: string;
+}
 
+const Welcome: React.FC<WelcomeProps> = ({serverUrl}) => {
     const canNicknameBeSubmit = async (nickname: string): Promise<boolean> => {
         if (!nickname) return false;
 

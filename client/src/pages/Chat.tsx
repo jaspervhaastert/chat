@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Grid, Paper, styled} from '@material-ui/core';
+import io from 'socket.io-client';
 
 import Messages from '../components/Messages';
 import InputBar from '../components/InputBar';
@@ -35,19 +36,37 @@ const MessageBarPaper = styled(Paper)({
 });
 
 interface ChatProps {
+    serverUrl: string;
     nickname: string;
 }
 
-const Chat: React.FC<ChatProps> = () => {
-    const [messages] = useState<Message[]>([]);
+const Chat: React.FC<ChatProps> = ({serverUrl, nickname}) => {
+    const [socket, setSocket] = useState<SocketIOClient.Socket>();
+    const [messages, setMessages] = useState<Message[]>([]);
 
     const canMessageBeSent = async (): Promise<boolean> => {
         return true;
     };
 
     const sendMessage = (message: string): void => {
-        console.log(message);
+        const messageObject = {nickname, message};
+        socket?.send(messageObject, () => {
+            setMessages(messages => [...messages, messageObject]);
+        });
     };
+
+    useEffect(() => {
+        const socket = io(serverUrl, {
+            query: {
+                nickname
+            }
+        });
+        setSocket(socket);
+
+        socket.on('message', (message: Message) => {
+            setMessages(messages => [...messages, message]);
+        });
+    }, [serverUrl, nickname]);
 
     return (
         <ChatColumn container direction="column">
