@@ -1,10 +1,8 @@
 import React from 'react';
-import {Grid, Paper, styled, Typography} from '@material-ui/core';
-import InputBar from '../components/InputBar';
+import {Grid, Typography} from '@material-ui/core';
 
-const WelcomePaper = styled(Paper)({
-    padding: '1em'
-});
+import {WelcomePaper} from './Welcome.styled';
+import InputBar from '../components/InputBar';
 
 interface WelcomeProps {
     serverUrl: string;

@@ -1,26 +1,8 @@
 import React, {useEffect, useRef} from 'react';
-import {Grid, List, ListItem, ListItemText, Paper, styled, Typography} from '@material-ui/core';
+import {List, ListItem, ListItemText} from '@material-ui/core';
+
+import {BoldInlineTypography, InlineTypography, MessagesPaper, PaperRow} from './Messages.styled';
 import Message from '../interfaces/Message';
-
-const MessagesPaper = styled(Paper)({
-    display: 'flex',
-    height: '100%',
-    overflow: 'hidden',
-    padding: '1em'
-});
-
-const PaperRow = styled(Grid)({
-    maxHeight: '100%',
-    overflow: 'auto'
-});
-
-const InlineTypography = styled(Typography)({
-    display: 'inline'
-});
-
-const BoldInlineTypography = styled(InlineTypography)({
-    fontWeight: 'bold'
-});
 
 interface MessagesProps {
     messages: Message[];

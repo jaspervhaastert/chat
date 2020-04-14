@@ -1,22 +1,7 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import {Button, Grid, styled, TextField} from '@material-ui/core';
+import {Button, Grid} from '@material-ui/core';
 
-const TextFieldColumn = styled(Grid)({
-    display: 'flex',
-    flex: 1,
-    paddingRight: '1em'
-});
-
-const NicknameTextField = styled(TextField)({
-    display: 'flex',
-    flex: 1
-});
-
-const ButtonColumn = styled(Grid)({
-    alignItems: 'flex-end',
-    display: 'flex',
-    justifyContent: 'flex-end'
-});
+import {ButtonColumn, TextField, TextFieldColumn} from './InputBar.styled';
 
 type CanSubmit = (value: string) => Promise<boolean>;
 type OnSubmit = (value: string) => void;
@@ -53,7 +38,7 @@ const InputBar: React.FC<InputBarProps> = ({textFieldLabel, buttonLabel, canSubm
             <Grid container>
                 <Grid container component="form" onSubmit={handleSubmit}>
                     <TextFieldColumn item>
-                        <NicknameTextField
+                        <TextField
                             label={textFieldLabel}
                             autoComplete="off"
                             value={value}
