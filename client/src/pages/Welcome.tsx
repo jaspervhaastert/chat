@@ -7,6 +7,28 @@ const WelcomePaper = styled(Paper)({
 });
 
 const Welcome: React.FC = () => {
+    const serverUrl = process.env.REACT_APP_SERVER_URL;
+    if (!serverUrl) {
+        console.error('\'REACT_APP_SERVER_URL\' environment variable is missing.');
+        return null;
+    }
+
+    const canNicknameBeSubmit = async (nickname: string): Promise<boolean> => {
+        if (!nickname) return false;
+
+        try {
+            const response = await fetch(`${serverUrl}/nicknames/${nickname}`, {
+                headers: {
+                    Accept: 'application/json'
+                }
+            });
+            return response.status === 404;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    };
+
     const redirectToChat = (nickname: string): void => {
         window.location.href = `/chat?nickname=${nickname}`;
     };
@@ -22,7 +44,12 @@ const Welcome: React.FC = () => {
                         <Typography color="textSecondary" gutterBottom>
                             Please enter a nickname to join the chat.
                         </Typography>
-                        <InputBar textFieldLabel="Nickname" buttonLabel="Submit" onSubmit={redirectToChat}/>
+                        <InputBar
+                            textFieldLabel="Nickname"
+                            buttonLabel="Submit"
+                            canSubmit={canNicknameBeSubmit}
+                            onSubmit={redirectToChat}
+                        />
                     </WelcomePaper>
                 </Grid>
             </Grid>
