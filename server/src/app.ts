@@ -4,6 +4,7 @@ config();
 import express, {Request, Response, NextFunction} from 'express';
 import http from 'http';
 import SocketIo, {Socket} from 'socket.io';
+import Message from './interfaces/Message';
 
 const app = express();
 const server = http.createServer(app);
@@ -35,14 +36,21 @@ io.on('connection', (socket: Socket) => {
     const nickname = socket.handshake.query.nickname;
     if (!nickname || getNickname(nickname)) return socket.disconnect(true);
 
-    console.log('A user connected');
+    console.log(`${nickname} connected`);
     nicknames.push(nickname);
 
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
+    socket.on('message', (message: Message, acknowledge: () => void) => {
+        console.log(`${message.nickname}: ${message.message}`);
 
+        socket.broadcast.send(message);
+        acknowledge();
+    });
+
+    socket.on('disconnect', () => {
         const nickname = socket.handshake.query.nickname;
         if (nickname) nicknames = nicknames.filter(nick => nick !== nickname);
+
+        console.log(`${nickname} disconnected`);
     });
 });
 
