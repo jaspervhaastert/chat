@@ -15,6 +15,8 @@ const setupSockets = (server: Server, nicknameService: NicknameService): void =>
         io.send({nickname, message: 'connected!'});
         console.log(`${nickname} connected`);
 
+        io.emit('nicknames', nicknameService.getNicknames());
+
         socket.on('message', (message: Message, acknowledge: () => void) => {
             console.log(`${message.nickname}: ${message.message}`);
 
