@@ -1,6 +1,8 @@
 import {Grid, Paper, styled} from '@material-ui/core';
 
-const ChatColumn = styled(Grid)({
+const Column = styled(Grid)({
+    display: 'flex',
+    flexDirection: 'column',
     height: '100%'
 });
 
@@ -30,7 +32,7 @@ const MessageBarPaper = styled(Paper)({
 });
 
 export {
-    ChatColumn,
+    Column,
     MessagesRow,
     MessagesColumn,
     MessageBarRow,

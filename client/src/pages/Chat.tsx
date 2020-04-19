@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import io from 'socket.io-client';
 
-import {ChatColumn, MessagesRow, MessagesColumn, MessageBarRow, MessageBarColumn, MessageBarPaper} from './Chat.styled';
+import {Column, MessageBarColumn, MessageBarPaper, MessageBarRow, MessagesColumn, MessagesRow} from './Chat.styled';
 import Messages from '../components/Messages';
 import InputBar from '../components/InputBar';
 import Message from '../interfaces/Message';
+import Nicknames from '../components/Nicknames';
 
 interface ChatProps {
     serverUrl: string;
@@ -14,6 +15,7 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({serverUrl, nickname}) => {
     const [socket, setSocket] = useState<SocketIOClient.Socket>();
     const [messages, setMessages] = useState<Message[]>([]);
+    const [nicknames, setNicknames] = useState<string[]>([]);
 
     const canMessageBeSent = async (value: string): Promise<boolean> => {
         return !!value;
@@ -37,28 +39,37 @@ const Chat: React.FC<ChatProps> = ({serverUrl, nickname}) => {
         socket.on('message', (message: Message) => {
             setMessages(messages => [...messages, message]);
         });
+
+        socket.on('nicknames', (nicknames: string[]) => {
+            setNicknames(nicknames);
+        });
     }, [serverUrl, nickname]);
 
     return (
-        <ChatColumn container direction="column">
-            <MessagesRow container>
-                <MessagesColumn container direction="column">
-                    <Messages messages={messages}/>
-                </MessagesColumn>
-            </MessagesRow>
-            <MessageBarRow container>
-                <MessageBarColumn container direction="column">
-                    <MessageBarPaper elevation={1}>
-                        <InputBar
-                            textFieldLabel="Message"
-                            buttonLabel="Send"
-                            canSubmit={canMessageBeSent}
-                            onSubmit={sendMessage}
-                        />
-                    </MessageBarPaper>
-                </MessageBarColumn>
-            </MessageBarRow>
-        </ChatColumn>
+        <>
+            <Column item xs={10}>
+                <MessagesRow container>
+                    <MessagesColumn container direction="column">
+                        <Messages messages={messages}/>
+                    </MessagesColumn>
+                </MessagesRow>
+                <MessageBarRow container>
+                    <MessageBarColumn container direction="column">
+                        <MessageBarPaper elevation={1}>
+                            <InputBar
+                                textFieldLabel="Message"
+                                buttonLabel="Send"
+                                canSubmit={canMessageBeSent}
+                                onSubmit={sendMessage}
+                            />
+                        </MessageBarPaper>
+                    </MessageBarColumn>
+                </MessageBarRow>
+            </Column>
+            <Column item xs={2}>
+                <Nicknames nicknames={nicknames} ownNickname={nickname}/>
+            </Column>
+        </>
     );
 };
 
