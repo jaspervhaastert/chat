@@ -12,6 +12,10 @@ class NicknameService {
         this.nicknames.push(nickname);
     }
 
+    public getNicknames(): Nickname[] {
+        return this.nicknames;
+    }
+
     public getNickname(nickname: Nickname): Nickname {
         return this.nicknames.find(nick => nick === nickname);
     }

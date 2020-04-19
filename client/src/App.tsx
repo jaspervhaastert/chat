@@ -32,7 +32,7 @@ const App: React.FC = () => {
             <Grid container>
                 <AppBar/>
             </Grid>
-            <ContentRow container>
+            <ContentRow container spacing={2}>
                 <Switch>
                     <Route path="/" exact>
                         <Welcome serverUrl={serverUrl}/>
