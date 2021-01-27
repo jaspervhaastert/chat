@@ -5,7 +5,9 @@ import Message from './interfaces/Message';
 import NicknameService from './services/NicknameService';
 
 const setupSockets = (server: Server, nicknameService: NicknameService): void => {
-    const io = SocketIo(server);
+    const io = SocketIo(server, {
+        origins: process.env.CLIENT_URL
+    });
 
     io.on('connection', (socket: Socket) => {
         const nickname = socket.handshake.query.nickname;
