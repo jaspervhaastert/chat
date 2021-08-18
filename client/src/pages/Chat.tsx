@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import io from 'socket.io-client';
+import io, {Socket} from 'socket.io-client';
 
 import {Column, MessageBarColumn, MessageBarPaper, MessageBarRow, MessagesColumn, MessagesRow} from './Chat.styled';
 import Messages from '../components/Messages';
 import InputBar from '../components/InputBar';
 import Message from '../interfaces/Message';
 import Nicknames from '../components/Nicknames';
+import Nickname from '../interfaces/Nickname';
 
 interface ChatProps {
     serverUrl: string;
@@ -13,7 +14,7 @@ interface ChatProps {
 }
 
 const Chat: React.FC<ChatProps> = ({serverUrl, nickname}) => {
-    const [socket, setSocket] = useState<SocketIOClient.Socket>();
+    const [socket, setSocket] = useState<Socket>();
     const [messages, setMessages] = useState<Message[]>([]);
     const [nicknames, setNicknames] = useState<string[]>([]);
 
@@ -40,8 +41,9 @@ const Chat: React.FC<ChatProps> = ({serverUrl, nickname}) => {
             setMessages(messages => [...messages, message]);
         });
 
-        socket.on('nicknames', (nicknames: string[]) => {
-            setNicknames(nicknames);
+        socket.on('nicknames', (nicknames: Nickname[]) => {
+            const nicknameStrings = nicknames.map(n => n.nickname);
+            setNicknames(nicknameStrings);
         });
     }, [serverUrl, nickname]);
 
